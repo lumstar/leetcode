@@ -161,6 +161,16 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         hash = hash<0 ? -hash : hash;
         return hash & this.capacity-1;//快速取hashCode%capatity
     }
+
+    /**
+     * "|" 二进制数值求或     ">>>"  二进制数值无符号右移
+     *
+     * 获取 2的n次方 -1的大小容积
+     * java int 4个字节 32 位  最多移动16位就可以了
+     *
+     * @param inputCapacity
+     * @return
+     */
     private int getCapacitySize(int inputCapacity) {
         int n = inputCapacity - 1;
         n |= n >>> 1;
@@ -179,6 +189,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
             this.key = k;
             this.value = v;
             int code = k.hashCode();
+            //正数 方便 后续get、set时候  计算数组位置
             this.hash = code<0 ? -code : code;
         }
     }
