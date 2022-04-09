@@ -13,7 +13,8 @@ public class FindKFromN {
 
     @Test
     public void testFindKFromN(){
-    combine(new char[]{'1','2','3'},3,"",0,3);
+        char[] chars = {'1', '2', '3'};
+        combine(chars,3,"",0,3);
     list.stream().forEach(System.out::println);
     }
     private void combine(char[] arr, int k, String res,int low,int high) {

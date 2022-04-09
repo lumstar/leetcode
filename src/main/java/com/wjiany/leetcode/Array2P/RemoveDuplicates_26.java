@@ -6,12 +6,26 @@ public class RemoveDuplicates_26 {
     @Test
     public void test(){
         int[] ints = {1, 2, 2, 3};
-        System.out.println(removeDuplicates(ints));
+        System.out.println(removeDuplicates_2(ints));
         for (int i = 0; i < ints.length; i++) {
             System.out.println(ints[i]);
         }
     }
 
+    public int removeDuplicates_2(int[] nums) {
+        if (nums.length<2){
+            return nums.length;
+        }
+        int i = 0;
+        for (int j=1; j < nums.length;j++) {
+            if(nums[i] != nums[j]){
+                nums[i+1]=nums[j];
+                i++;
+            }
+
+        }
+        return i+1;
+    }
     public int removeDuplicates(int[] nums) {
         if (nums.length<2){
             return nums.length;
