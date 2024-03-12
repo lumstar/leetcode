@@ -11,10 +11,34 @@ public class FindMedianSortedArrays_4 {
 
     @Test
     public void testFind(){
-        System.out.println(findMedianSortedArrays(new int[]{1,3},new int[]{2,4}));
+        System.out.println(findMedianSortedArrays(new int[]{1,3},new int[]{2}));
     }
 
+
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0;i<nums1.length;i++){
+            list.add(nums1[i]);
+        }
+        for(int i = 0;i<nums2.length;i++){
+            list.add(nums2[i]);
+        }
+        int length = nums1.length+nums2.length;
+        int k = length/2+1;
+        Queue<Integer> queue = new PriorityQueue<>(k);
+        for (int i = 0;i<length;i++){
+            if(queue.size()<k){
+                queue.add(list.get(i));
+            }else if(queue.size() == k && list.get(i) > queue.peek()){
+                queue.remove();
+                queue.add(list.get(i));
+            }
+        }
+        boolean isOdd = list.size() % 2 == 1;
+
+        return isOdd?queue.remove():(queue.remove()+queue.remove())/2.0;
+    }
+    public double findMedianSortedArrays0(int[] nums1, int[] nums2) {
 
         List<Integer> list = new ArrayList<>();
         for(int i = 0;i<nums1.length;i++){
@@ -46,7 +70,7 @@ public class FindMedianSortedArrays_4 {
             if(flag){
                 if(m<length1&&n<length2){
                     if(i == mid-1){
-                        result = nums1[m]<nums2[n]?nums1[m]:nums2[n];
+                        result = Math.min(nums1[m], nums2[n]);
                         break;
                     }
                     if(nums1[m]<nums2[n]){
@@ -70,9 +94,9 @@ public class FindMedianSortedArrays_4 {
             }else {
                 if(m<length1&&n<length2){
                     if(i == mid-2 ){
-                        tmp = nums1[m]<nums2[n]?nums1[m]:nums2[n];
+                        tmp = Math.min(nums1[m], nums2[n]);
                     }else if(i == mid-1){
-                        result = nums1[m]<nums2[n]?nums1[m]:nums2[n];
+                        result = Math.min(nums1[m], nums2[n]);
                         break;
                     }
                     if(nums1[m]<nums2[n]){

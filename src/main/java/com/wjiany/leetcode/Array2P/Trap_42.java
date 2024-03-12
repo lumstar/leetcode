@@ -32,12 +32,33 @@ class Trap_42 {
         }
         return ans;
     }
+    /**  o         o
+     *   o     o   o
+     *   o o   o   o
+     * o o o   o   o
+     * o o o o o o o
+     */
+    public int trap(int[] height) {
+        int res = 0;
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0;i<height.length;i++){
+
+            while (!stack.isEmpty() && height[i]>height[stack.peek()]){
+                Integer subHeightIndex = stack.pop();
+                if(stack.isEmpty()) break;
+                int distance = i-stack.peek()-1;
+                res += distance*(Math.min(height[i],height[stack.peek()])-height[subHeightIndex]);
+            }
+            stack.push(i);
+        }
+        return res;
+    }
     /**
      * o     o
      * o o o o
      * o o o o
      */
-    public int trap(int[] height) {
+    public int trap2(int[] height) {
         int ans = 0;
         Stack<Integer> stack = new Stack<>();
         for (int currIndex = 0;currIndex<height.length;currIndex++){

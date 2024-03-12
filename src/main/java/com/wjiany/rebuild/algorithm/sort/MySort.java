@@ -17,9 +17,9 @@ public class MySort {
     @Test
     public void test(){
         int[] ints = {2,7,-1,3, 2, 1,5,6,7};
-        //shellSort(ints);
+        heapSort(ints);
         //quickSort(ints,0,ints.length-1);
-        mergeSort(ints,0,ints.length-1);
+//        mergeSort(ints,0,ints.length-1);
         for (int i = 0; i < ints.length; i++) {
             System.out.println(ints[i]);
         }
@@ -124,6 +124,7 @@ public class MySort {
      * 每次对间隔为gap的元素进行插入排序
      * https://www.cnblogs.com/jingmoxukong/p/4303279.html
      * @param nums
+     *   9    1    2    5    7    4    8    6    3    5
      */
     public void shellSort(int[] nums) {
         int gap = nums.length/2;
@@ -132,10 +133,31 @@ public class MySort {
             //外循环包含两层意思，一个对0开始的间隔gap进行循环，一个是对0-gap间的所有条战线的循环
             // 两个循环合起来就是gap-nums.length
             for (int i = gap; i < nums.length; i++) {
-                // 对距离为 gap 的元素组进行排序
+                // 对距离为 gap 的元素组进行 选择 排序
                 for (int j = i; j >gap-1 && nums[j-gap] > nums[j]; j = j - gap) {
                     swap(nums,j,j-gap);
                 }
+            }
+        }
+    }
+
+    /**
+     * 插入排序
+     * @param nums
+     */
+    public void shellSort_2(int[] nums) {
+        int gap = nums.length/2;
+        for (; gap > 0 ; gap /=2) {
+            // 距离为 gap的插入排序
+            for (int i = gap; i < nums.length; i++) {
+                // 对距离为 gap 的元素组进行插入排序
+                //所有比tmp大的后移动一位
+                int tmp = nums[i];
+                int j = 0;
+                for ( j = i-gap; j >=0 && tmp < nums[j]; j = j - gap) {
+                    nums[j+gap]= nums[j];
+                }
+                nums[j+gap] = tmp;
             }
         }
     }
@@ -186,11 +208,11 @@ public class MySort {
      */
     public void heapSort(int[] nums) {
         for (int i = nums.length / 2; i >= 0; i--) { // 循环建立初始堆，此时所有的父 大于 子
-            heapAdjust(nums, i, nums.length);
+            heapAdjust_rec(nums, i, nums.length);
         }
         for (int i = nums.length - 1; i > 0; i--) { // 进行n-1次循环，完成排序
             swap(nums,0,i);                    // 最后一个元素和第一元素进行交换
-            heapAdjust(nums, 0, i);         // 筛选 R[0] 结点，得到i-1个结点的堆
+            heapAdjust_rec(nums, 0, i);         // 筛选 R[0] 结点，得到i-1个结点的堆
         }
     }
 
@@ -219,6 +241,24 @@ public class MySort {
             child = 2 * child + 1;
         }
         array[parent] = temp;
+    }
+
+    /**
+     * 递归
+     * @param array
+     * @param parent
+     * @param length
+     */
+    private void heapAdjust_rec(int[] array, int parent, int length) {
+        int tmp = parent; // temp保存当前父节点
+        int left = 2 * parent + 1; // 先获得左孩子
+        int right = 2 * parent + 2; // 先获得左孩子
+        if(left < length && array[left] > array[parent]) parent = left;
+        if(right < length && array[right] > array[parent])  parent = right;
+        if(parent != tmp) {
+            swap(array,parent,tmp);
+            heapAdjust_rec(array,parent,length);
+        }
     }
 
     /**
@@ -325,11 +365,43 @@ public class MySort {
         }
         return max;
     }
+
+    /**
+     * 计数排序？https://www.bilibili.com/video/BV1KU4y1M7VY/?spm_id_from=333.788
+     *  todo
+     * @param nums
+     */
+    public void countSort(int[] nums){
+        // 1,分桶计数
+        int max = Integer.MIN_VALUE;
+        for (int i : nums) {
+            if (i > max) max = i;
+        }
+        int[] count = new int[max+1];
+        for(int i=0;i<nums.length;i++){
+            count[nums[i]]++;
+        }
+        //2,计数累加 (累加值-1 就是排序坐标)
+        for (int i = 1; i < count.length; i++) {
+            count[i] +=count[i-1];
+        }
+        //3，取桶排序
+        int[] res = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            res[--count[nums[i]]]= nums[i];
+//            count[nums[i]]--;
+        }
+        for (int i=0;i <nums.length;i++) nums[i]= res[i];
+    }
     @Test
     public void test1(){
-        int[] ints = {2,7,-1,3, 2, 1,5,6,7};
+        int i = 6;
+        int b = i--;
+        System.out.println(b);
+        System.out.println(--i-1);
+        System.out.println((--i)-1);
         int[] arr = { 49, 38, 65, 97, 76, 13, 27, 50 };
-        radixSort(arr);
+        countSort(arr);
         System.out.println("排好序的数组：");
         for (int e : arr)
             System.out.print(e+" ");
