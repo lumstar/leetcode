@@ -43,7 +43,7 @@ public class TreeOrder {
             }
         }
     }
-    //前序非递归
+    //前序非递归：根左右
     public void preOrder2(TreeNode treeNode){
         Stack<TreeNode> stack = new Stack<>();
         if(treeNode!=null) stack.push(treeNode);
@@ -54,7 +54,7 @@ public class TreeOrder {
             if (pop.left !=null) stack.push(pop.left);
         }
     }
-    //后序非递归
+    //后序非递归 左右根  ：前序：根左右
     public void postOrder2(TreeNode treeNode){
         List<Integer> list = new LinkedList<>();
         Stack<TreeNode> stack = new Stack<>();
@@ -86,8 +86,8 @@ public class TreeOrder {
     public void inOrder2(TreeNode treeNode){
         Stack<TreeNode> stack = new Stack<>();
         TreeNode curr = treeNode;
-        while (treeNode != null ||!stack.isEmpty()){
-            while (treeNode != null ){
+        while (curr != null ||!stack.isEmpty()){
+            while (curr != null ){
                 stack.push(treeNode);
                 curr = curr.left;
             }
