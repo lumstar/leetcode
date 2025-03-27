@@ -22,6 +22,7 @@ public class Search_33 {
         if (nums == null || nums.length == 0) {
             return -1;
         }
+
         int l = 0;
         int r = nums.length - 1;
         int mid;

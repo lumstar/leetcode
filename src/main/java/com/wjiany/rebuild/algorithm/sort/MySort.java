@@ -2,15 +2,17 @@ package com.wjiany.rebuild.algorithm.sort;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * 内部排序 ：
- * 1 冒泡
- * 2 选择
- * 3 插入
+ * 1 冒泡 （稳定）
+ * 2 选择 （不稳定）
+ * 3 插入   稳定
  * 4 希尔(增强插入)
- * 5 快速
- * 6 堆排序(选择排序)
- * 7 归并排序
+ * 5 快速  不稳定
+ * 6 堆排序(选择排序)  不稳定
+ * 7 归并排序  稳定
  * 8 基数排序
  */
 public class MySort {
@@ -124,7 +126,11 @@ public class MySort {
      * 每次对间隔为gap的元素进行插入排序
      * https://www.cnblogs.com/jingmoxukong/p/4303279.html
      * @param nums
-     *   9    1    2    5    7    4    8    6    3    5
+     *   9    1  -  2    5  -  7 ！   4  -  8    6  -  3    5
+     *
+     *    （2）    1  -  （9）    5  -  7 ！   4  -  8    6  -  3    5
+     *
+     *     2    1  -  9    5  -  7 ！   4  -  8    6  -  3    5
      */
     public void shellSort(int[] nums) {
         int gap = nums.length/2;
@@ -139,6 +145,13 @@ public class MySort {
                 }
             }
         }
+    }
+
+    @Test
+    public void test_1(){
+        int[] ints = {2,7,1,3, 2, 1,5,6,7,8,9,10};
+        radixSort(ints);
+        Arrays.stream(ints).forEach(System.out::println);
     }
 
     /**
@@ -198,6 +211,19 @@ public class MySort {
             nums[right] = nums[left];
         }
         nums[left] = baseValue;
+        return left;
+    }
+
+
+    private  int testPartition(int[] nums ,int left ,int right){
+        int baseVale = nums[left];
+        while (left < right){
+            while (left< right && nums[right] >= baseVale) right--;
+            nums[left] =nums[right];
+            while (left< right && nums[left] <= baseVale) left++;
+            nums[right] =nums[left];
+        }
+        nums[left] = baseVale;
         return left;
     }
 
@@ -405,5 +431,9 @@ public class MySort {
         System.out.println("排好序的数组：");
         for (int e : arr)
             System.out.print(e+" ");
+
+        String str = "s";
+        String substring = str.substring(0, str.length());
+        System.out.println(substring);
     }
 }

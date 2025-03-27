@@ -44,4 +44,51 @@ public class LengthOfLongestSubstring_3 {
         return ans;
 
     }
+
+    @Test
+    public void test11(){
+        System.out.println(lengthOfLongestSubstring_oo("aabaab!bb"));
+
+    }
+    public int lengthOfLongestSubstring_oo(String s) {
+
+        int max = 0;
+        String tmp = "";
+
+        for(int i = 0;i<s.length();i++){
+            String substring = s.substring(i, i + 1);
+            int indexOf = tmp.indexOf(substring);
+            if( indexOf != -1){
+
+                tmp = tmp.substring(indexOf+1)+s.charAt(i);
+            }else{
+                tmp=tmp+s.charAt(i);
+                if(tmp.length() >max){
+                    max = tmp.length();
+                }
+            }
+        }
+        return max;
+
+    }
+
+    public int lengthOfLongestSubstring_dd(String s) {
+
+       Map<Character,Integer> map = new HashMap<>();
+
+       int ans = 0;
+
+       int  lastMax = 0;//之前最大没有重复的最后一个序列 位置
+
+        for(int i = 0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(map.get(c) != null){
+                lastMax =Math.max(map.get(c)+1,lastMax);
+            }
+            ans = Math.max(i+1-lastMax,ans);
+            map.put(c,i);
+            }
+        return ans;
+
+    }
 }

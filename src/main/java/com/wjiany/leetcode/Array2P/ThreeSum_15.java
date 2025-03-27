@@ -3,6 +3,8 @@ package com.wjiany.leetcode.Array2P;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，
@@ -19,17 +21,32 @@ public class ThreeSum_15 {
         List<List<Integer>> lists = new ArrayList<>();
         for (int i = 0; i <nums.length ; i++) {
             int tmp = nums[i];
-            Set<Integer> set = new HashSet<>();
+            Map<Integer,Integer> set = new HashMap<>();
             for (int j = i+1; j < nums.length; j++) {
-                boolean contains = set.contains(-tmp - nums[j]);
+                Integer integer = set.get(-tmp - nums[j]);
+                boolean contains = integer != null && integer!=i && integer != j;
                 if(contains){
                     List<Integer> list = new ArrayList<>();
                     list.add(tmp);
                     list.add(nums[j]);
                     list.add(-tmp-nums[j]);
-                    lists.add(list);
+
+                    Stream<Integer> sorted = list.stream().sorted();
+                    List<Integer> collect = sorted.collect(Collectors.toList());
+                    StringBuilder sb = new StringBuilder();
+                    collect.forEach(l->sb.append(l));
+                    for (int k = 0; k < lists.size(); k++) {
+                        List<Integer> list1 = lists.get(k);
+                        StringBuilder stringBuilder = new StringBuilder();
+                        list1.forEach(l->stringBuilder.append(l));
+                        if(sb.toString().equals(stringBuilder.toString())){
+                            continue;
+                        }
+                    }
+
+                    lists.add(collect);
                 }else {
-                    set.add(nums[j]);
+                    set.put(nums[j],j);
                 }
             }
 

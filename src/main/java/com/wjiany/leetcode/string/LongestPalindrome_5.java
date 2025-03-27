@@ -3,7 +3,8 @@ package com.wjiany.leetcode.string;
 
 import org.junit.Test;
 
-
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class LongestPalindrome_5 {
@@ -83,6 +84,66 @@ public class LongestPalindrome_5 {
             }
         }
         return true;
+    }
+    public String longestPalindromeaaa(String s) {
+        String res = null;
+
+        int ans =0;
+        Map<String,Boolean> map = new HashMap<>();
+        for(int i = 0;i< s.length();i++){
+            for(int j = i;j<= s.length();j++){
+                String substring = s.substring(i,j);
+
+                if(isRec(substring,map)){
+                    if(substring.length() > ans){
+                        res = substring;
+                        ans = res.length();
+                    }
+                }
+            }
+        }
+        return res;
+
+    }
+    public String longestPalindromebbb(String s) {
+        int ans = 0;
+        int begin = 0;
+
+        int length = s.length();
+        boolean[][] dp = new boolean[length][length];
+
+        for(int step = 0;step< s.length();step++){
+            for(int i = 0;step+i< s.length();i++){
+                int len = i+step;
+              if(step == 0)  dp[i][len] = true;
+              else if(step == 1) dp[i][len] = s.charAt(i) == s.charAt(len);
+              else dp[i][len] = s.charAt(i) == s.charAt(len) && dp[i+1][len-1];
+              if(dp[i][len] && step+1 >ans){
+                  ans = step+1;
+                  begin = i;
+              }
+            }
+        }
+        return  s.substring(begin,begin+ans);
+
+    }
+    public boolean isRec(String s, Map<String ,Boolean> map ){
+        if (s.length() == 0) return true;
+
+        if(s.length() ==1 ) return true;
+        if(s.length() ==2 ) return s.charAt(0) == s.charAt(1);
+//        if(map.containsKey(s)) return map.get(s);
+//        map.put(substring,rec);
+        return s.charAt(0) == (s.charAt(s.length()-1)) && isRec(s.substring(1, s.length() - 1), map);
+    }
+
+
+    @Test
+    public void  test111(){
+        long currentTimeMillis = System.currentTimeMillis();
+        System.out.println(longestPalindromebbb("babad")
+        );
+        System.out.println(System.currentTimeMillis()-currentTimeMillis);
     }
 
 }
