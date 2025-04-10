@@ -27,7 +27,6 @@ public class StrStr_28 {
         for (int i = 0; i <= lenA - lenB; i++) {
             if(haystack.substring(i,i+lenB).equals(needle)){
                 return i;
-                Integer.MAX_VALUE;
             }
         }
         return -1;

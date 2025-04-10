@@ -13,8 +13,8 @@ public class TopKFrequent_347 {
     }
     public List<Integer> topKFrequent(int[] nums, int k) {
         int length = nums.length;
-        Queue<Integer> pro = new PriorityQueue<>();
-        Map<Integer,Integer> map = new TreeMap<>();
+        Queue<Integer> pro = new PriorityQueue<>(k);
+        Map<Integer,Integer> map = new HashMap<>();
         for (int i=0;i<length;i++){
             if(map.containsKey(nums[i])){
                 map.put(nums[i],map.get(nums[i])+1);
@@ -41,4 +41,5 @@ public class TopKFrequent_347 {
         }
         return list;
     }
+
 }

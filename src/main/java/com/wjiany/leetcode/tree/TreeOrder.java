@@ -54,7 +54,7 @@ public class TreeOrder {
             if (pop.left !=null) stack.push(pop.left);
         }
     }
-    //后序非递归 左右根  ：前序：根左右
+    //后序非递归 左右根
     public void postOrder2(TreeNode treeNode){
         List<Integer> list = new LinkedList<>();
         Stack<TreeNode> stack = new Stack<>();
