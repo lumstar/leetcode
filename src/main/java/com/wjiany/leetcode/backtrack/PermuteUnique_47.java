@@ -10,7 +10,10 @@ public class PermuteUnique_47 {
 
     @Test
     public void test(){
-        permuteUnique(new int[]{1,1,2}).stream().forEach(x->{System.out.println("==");x.stream().forEach(System.out::println);});
+        Integer i1 = 40;
+        Integer i2 = 40;
+        System.out.println(i1==i2);
+//        permuteUnique(new int[]{1,1,2}).stream().forEach(x->{System.out.println("==");x.stream().forEach(System.out::println);});
     }
 
     List<List<Integer>> lists = new ArrayList<>();
