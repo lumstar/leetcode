@@ -6,6 +6,8 @@ public class TreeOrder {
 
     //层次遍历
     public void levelOrder(TreeNode treeNode){
+
+        Math.pow(1,2);
         Queue<TreeNode> queue = new LinkedList<>();
         if(treeNode!=null) queue.add(treeNode);
         while (!queue.isEmpty()){
